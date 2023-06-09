@@ -1,11 +1,10 @@
 ﻿using EspacioCalculadora;
+using Empresa;
 // See https://aka.ms/new-console-template for more information
 
 
 //crear un objeto del tipo cal y que se llama calculadora
 Calculadora cal = new Calculadora();
-
-
 
 Console.WriteLine("Ingresar un numero: ");
 if (!int.TryParse(Console.ReadLine(), out int num1))
@@ -135,3 +134,69 @@ cal.Restar(3);
 Console.WriteLine(cal.Resultado);
 cal.Dividir(2);
 Console.WriteLine(cal.Resultado);*/
+
+//Ejercicio 2
+Empleado[] empleados = new Empleado[3];
+
+for (int i = 0; i < 3; i++)
+{
+    Console.WriteLine("Ingrese los datos del empleado " +(i+1)+":");
+    Empleado empleado = new Empleado();
+
+    Console.WriteLine("Nombre: ");
+    empleado.Nombre = Console.ReadLine();
+
+    Console.WriteLine("Apellido: ");
+    empleado.Apellido = Console.ReadLine();
+
+    Console.WriteLine("Fecha de nacimiento (dd/mm/aaaa): ");
+    empleado.FechaNacimiento = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy",null);
+
+    Console.WriteLine("Estado civil (S)soltero/a, (C)cansando/a: ");
+    empleado.EstadoCivil = Console.ReadLine()[0];
+
+    Console.WriteLine("Genero (M)masculino, (F)femenino: ");
+    empleado.Genero = Console.ReadLine()[0];
+
+    Console.WriteLine("Sueldo basico: ");
+    empleado.SueldoBasico = double.Parse(Console.ReadLine());
+
+    Console.WriteLine("Cargo: ");
+    Console.WriteLine("(0)Auxiliar");
+    Console.WriteLine("(1)Administrativo");
+    Console.WriteLine("(2)Ingeniero");
+    Console.WriteLine("(3)Especialista");
+    Console.WriteLine("(4)Investigador");
+    Console.WriteLine("Ingresar: ");
+    empleado.Cargo = (Cargos)int.Parse(Console.ReadLine());
+
+    empleados[i] = empleado;
+
+    Console.WriteLine();
+}
+
+double montoTotalSalarios = 0;
+
+Empleado empleadoProximoJubilarse = null;
+int aniosProximoJubilarse = int.MaxValue;
+
+foreach (Empleado empleado in empleados)
+{
+    montoTotalSalarios += empleado.Salario;
+
+    if (empleado.AniosParaJubilarse < aniosProximoJubilarse)
+    {
+        empleadoProximoJubilarse = empleado;
+        aniosProximoJubilarse = empleado.AniosParaJubilarse;
+    }
+}
+
+Console.WriteLine("Monto total de salarios: $" + montoTotalSalarios);
+Console.WriteLine();
+Console.WriteLine("Empleado mas proximo a jubilarse: ");
+Console.WriteLine("Nombre: "+empleadoProximoJubilarse.Nombre);
+Console.WriteLine("Apellido: "+empleadoProximoJubilarse.Apellido);
+Console.WriteLine("Edad: "+empleadoProximoJubilarse.Edad);
+Console.WriteLine("Salario: $"+empleadoProximoJubilarse.Salario);
+
+Console.ReadLine();
